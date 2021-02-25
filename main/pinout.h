@@ -11,4 +11,6 @@
 #define PIN_LCD_DC GPIO_NUM_2
 #define PIN_LCD_RST GPIO_NUM_12
 
+#define PIN_KEY_USER GPIO_NUM_0
+
 #endif  // __REALEARTH_PINOUT__

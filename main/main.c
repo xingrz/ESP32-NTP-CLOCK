@@ -37,10 +37,12 @@ app_main(void)
 #if 0
 	assert(pdPASS == xTaskCreate(lcd_proc_task, "lcd_proc_task", LCD_PROC_STACK_SIZE, NULL,
 							 tskIDLE_PRIORITY + 1, NULL));
+#endif
 
 	assert(pdPASS == xTaskCreate(btn_proc_task, "btn_proc_task", BTN_PROC_STACK_SIZE, NULL,
 							 tskIDLE_PRIORITY + 1, NULL));
 
+#if 0
 	assert(pdPASS == xTaskCreate(wlan_proc_task, "wlan_proc_task", WLAN_PROC_STACK_SIZE, NULL,
 							 tskIDLE_PRIORITY + 1, NULL));
 
