@@ -9,8 +9,9 @@
 #include "services/gatt/ble_svc_gatt.h"
 
 #include "blec.h"
+#include "blec_proc.h"
 
-static const char *TAG = "blec";
+#define TAG "blec"
 
 static const char *blec_ssid = "realEarth";
 
@@ -33,8 +34,6 @@ static uint8_t own_addr_type;
 
 static uint16_t blec_conn_handle;
 static uint16_t blec_val_handle;
-
-static blec_recv_cb blec_on_recv = NULL;
 
 static bool blec_sync_ready = false;
 static bool blec_advertising = false;
@@ -70,10 +69,8 @@ static const struct ble_gatt_svc_def services[] = {
 };
 
 int
-blec_init(blec_recv_cb recv_cb)
+blec_init(void)
 {
-	blec_on_recv = recv_cb;
-
 	int rc;
 
 	ESP_ERROR_CHECK(esp_nimble_hci_and_controller_init());
@@ -332,9 +329,7 @@ blec_on_access(
 		case BLE_GATT_ACCESS_OP_WRITE_CHR:
 			rc = ble_hs_mbuf_to_flat(ctxt->om, &write_buf, sizeof(write_buf), &write_len);
 			ESP_LOGI(TAG, "BLE write (%d)", write_len);
-			if (blec_on_recv != NULL) {
-				blec_on_recv(write_buf, write_len);
-			}
+			blec_recv(write_buf, write_len);
 			return rc;
 
 		default:

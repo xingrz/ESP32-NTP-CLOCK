@@ -5,6 +5,7 @@
 #include "lvgl.h"
 #include "disp.h"
 #include "backlight.h"
+#include "blec.h"
 
 #define TAG "main"
 
@@ -25,6 +26,7 @@ app_main(void)
 	backlight_init();
 	lv_init();
 	disp_init();
+	blec_init();
 
 	assert(pdPASS == xTaskCreate(lv_proc_task, "lv_proc_task", LV_PROC_STACK_SIZE, NULL,
 							 tskIDLE_PRIORITY + 1, NULL));
@@ -42,17 +44,14 @@ app_main(void)
 	assert(pdPASS == xTaskCreate(btn_proc_task, "btn_proc_task", BTN_PROC_STACK_SIZE, NULL,
 							 tskIDLE_PRIORITY + 1, NULL));
 
-#if 0
 	assert(pdPASS == xTaskCreate(wlan_proc_task, "wlan_proc_task", WLAN_PROC_STACK_SIZE, NULL,
 							 tskIDLE_PRIORITY + 1, NULL));
 
+#if 0
 	assert(pdPASS == xTaskCreate(ntp_proc_task, "ntp_proc_task", NTP_PROC_STACK_SIZE, NULL,
 							 tskIDLE_PRIORITY + 1, NULL));
 
 	assert(pdPASS == xTaskCreate(earth_proc_task, "earth_proc_task", EARTH_PROC_STACK_SIZE, NULL,
-							 tskIDLE_PRIORITY + 1, NULL));
-
-	assert(pdPASS == xTaskCreate(ble_proc_task, "ble_proc_task", BLE_PROC_STACK_SIZE, NULL,
 							 tskIDLE_PRIORITY + 1, NULL));
 #endif
 

@@ -11,5 +11,6 @@ esp_err_t wlan_connect();
 esp_err_t wlan_set(const char *ssid, const char *password);
 esp_err_t wlan_reset(void);
 bool wlan_configured(char *ssid);
+void wlan_setup(char *ssid, char *password);
 
 #endif  // __REALEARTH_WLAN__

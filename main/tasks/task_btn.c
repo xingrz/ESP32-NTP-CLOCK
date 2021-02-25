@@ -27,10 +27,10 @@ void
 btn_on_long_pressed(void)
 {
 	ESP_LOGI(TAG, "Long pressed");
-	// wlan_reset();
+	wlan_reset();
 	// lcd_show_qrcode();
 	// backlight_set(BACKLIGHT_MAX);
-	// blec_adv_start();
+	blec_adv_start();
 }
 
 void

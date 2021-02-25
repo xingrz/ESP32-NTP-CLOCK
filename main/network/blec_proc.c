@@ -1,12 +1,13 @@
 #include "common.h"
 
 #include "tasks.h"
-#include "task_lcd.h"
-#include "task_wlan.h"
 #include "blec.h"
+#include "blec_proc.h"
+
+#include "task_lcd.h"
 #include "wlan.h"
 
-#define TAG "task_ble"
+#define TAG "blec_proc"
 
 #define SETUP_MAGIC 0x0811
 
@@ -25,8 +26,8 @@ static req_header_t *recv_hdr = (req_header_t *)&recv_buf;
 
 static void ble_handle_cmd(uint16_t cmd, void *data, uint16_t len);
 
-static void
-ble_recv_cb(void *buf, uint16_t len)
+void
+blec_recv(void *buf, uint16_t len)
 {
 	ESP_LOGI(TAG, "recv: %d, pos: %d", len, recv_pos);
 
@@ -101,7 +102,7 @@ ble_handle_cmd(uint16_t cmd, void *data, uint16_t len)
 	switch (cmd) {
 		case CMD_SETUP: {
 			ble_send_ack();
-			lcd_show_loading();
+			// lcd_show_loading();
 
 			char ssid[WLAN_SSID_LEN];
 			char password[WLAN_PASSWORD_LEN];
@@ -126,12 +127,4 @@ ble_handle_cmd(uint16_t cmd, void *data, uint16_t len)
 		default:
 			break;
 	}
-}
-
-void
-ble_proc_task(void *arg)
-{
-	blec_init(ble_recv_cb);
-	ESP_LOGI(TAG, "BLE init done");
-	vTaskDelete(NULL);
 }

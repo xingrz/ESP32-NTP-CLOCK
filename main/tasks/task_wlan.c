@@ -2,7 +2,6 @@
 #include "freertos/queue.h"
 
 #include "tasks.h"
-#include "task_wlan.h"
 #include "task_lcd.h"
 #include "wlan.h"
 
@@ -31,15 +30,15 @@ wlan_proc_task(void *arg)
 	wlan_init();
 
 	if (wlan_configured(wlan_ssid)) {
-		lcd_show_loading();
+		// lcd_show_loading();
 		if (wlan_connect() == ESP_OK) {
 			ESP_LOGI(TAG, "Wi-Fi connected");
 		} else {
-			lcd_show_offline();
+			// lcd_show_offline();
 			ESP_LOGI(TAG, "Wi-Fi not connectable");
 		}
 	} else {
-		lcd_show_offline();
+		// lcd_show_offline();
 		ESP_LOGI(TAG, "Wi-Fi not set");
 	}
 
@@ -58,7 +57,7 @@ wlan_proc_task(void *arg)
 					vTaskDelay(3 * 1000 / portTICK_PERIOD_MS);
 					esp_restart();
 				} else {
-					lcd_show_qrcode();
+					// lcd_show_qrcode();
 					ESP_LOGI(TAG, "Setting up failed");
 					memset(wlan_ssid, 0, sizeof(wlan_ssid));
 				}
